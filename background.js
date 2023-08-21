@@ -6,7 +6,7 @@ chrome.webRequest.onHeadersReceived.addListener(
         }
     },
     {urls: ["https://tweetdeck.twitter.com/*"]},
-    ["blocking", "responseHeaders", "extraHeaders"]
+    ["blocking", "responseHeaders"]
 );
 
 chrome.webRequest.onBeforeRequest.addListener(
