@@ -1,6 +1,6 @@
 (async () => {
     let html = await fetch(chrome.runtime.getURL('/files/index.html')).then(r => r.text());
-    document.documentElement.innerHTML = html;
+    document.getRootNode().documentElement.innerHTML = html;
 
     let [interception_js, vendor_js, bundle_js, bundle_css] =
         await Promise.allSettled([
@@ -86,12 +86,15 @@
 
     let int = setTimeout(function() {
         let badBody = document.querySelector('body:not(#injected-body)');
-        if (badBody) {
-            let badHead = document.querySelector('head:not(#injected-head)');
+        let badHead = document.querySelector('head:not(#injected-head)');
+        if (badBody && badHead) {
+            badBody.remove();
+            badHead.remove();
             clearInterval(int);
-            if(badHead) badHead.remove();
-            badBody.remove(); 
         }
+        if (badBody) badBody.remove();
+        if (badHead) badHead.remove();
+        if (document.querySelectorAll('[id*="injected"]').length == 2 && document.querySelectorAll('body').length == 1 && document.querySelectorAll('head').length) clearInterval(int);
     }, 200);
     setTimeout(() => clearInterval(int), 10000);
 })();
