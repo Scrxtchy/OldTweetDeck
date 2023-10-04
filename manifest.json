@@ -4,6 +4,12 @@
   "version": "3.1.8",
   "manifest_version": 2,
   "homepage_url": "https://github.com/dimdenGD/OldTweetDeck",
+  "browser_specific_settings": {
+    "gecko": {
+     "id": "oldtweetdeck@dimden.dev",
+     "strict_min_version": "90.0"
+     }
+   },
   "permissions": [
     "webRequest",
     "webRequestBlocking",
@@ -31,7 +37,7 @@
   "content_scripts": [
     {
       "matches": ["https://twitter.com/i/tweetdeck"],
-      "js": ["src/notifications.js", "src/injection.js"],
+      "js": ["src/injection.js"],
       "all_frames": true,
       "run_at": "document_start"
     }
